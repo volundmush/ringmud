@@ -194,13 +194,19 @@ namespace ring::telnet {
     }
 
     void TelnetProtocol::sendBytes(const std::vector<uint8_t> &data) {
-        auto &details = ring::net::connections.get<ring::net::client_details>(entity);
+        auto &details = ring::netreg.get<ring::net::client_details>(entity);
 
         if(details.clientType == ring::net::TcpTelnet || details.clientType == ring::net::TlsTelnet) {
-            auto &buffers = ring::net::connections.get<ring::net::socket_buffers>(entity);
-            auto prep = buffers.out_buffer.prepare(data.size());
+            auto &buffers = ring::netreg.get<ring::net::socket_buffers>(entity);
+            auto prep = buffers.out_buffer->prepare(data.size());
             memcpy(prep.data(), data.data(), data.size());
-            buffers.out_buffer.commit(data.size());
+            buffers.out_buffer->commit(data.size());
+
+            if(details.clientType == ring::net::TcpTelnet) {
+                auto &plain = ring::netreg.get<ring::net::plain_socket>(entity);
+                plain.send();
+            }
+
         }
     }
 

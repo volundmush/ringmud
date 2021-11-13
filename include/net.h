@@ -6,14 +6,13 @@
 #define RINGMUD_NET_H
 
 #include <mutex>
+#include <memory>
 #include "entt/entt.hpp"
 #include "asio.hpp"
 #include "core.h"
 
 
 namespace ring::net {
-
-    extern entt::registry connections;
 
     enum ClientType : uint8_t {
         TcpTelnet = 0,
@@ -48,21 +47,22 @@ namespace ring::net {
 
     struct connection_details {
         explicit connection_details(entt::entity ent);
+        ~connection_details();
         entt::entity entity;
-        std::mutex in_mutex, out_mutex;
-        void start();
+        std::mutex *in_mutex, *out_mutex;
     };
 
     struct socket_buffers {
         explicit socket_buffers(entt::entity ent);
         entt::entity entity;
-        asio::streambuf in_buffer, out_buffer;
+        asio::streambuf *in_buffer, *out_buffer;
     };
 
     struct plain_socket {
-        explicit plain_socket(entt::entity ent, asio::ip::tcp::socket sock);
+        explicit plain_socket(entt::entity ent, asio::ip::tcp::socket *sock);
+        ~plain_socket();
         entt::entity entity;
-        asio::ip::tcp::socket socket;
+        asio::ip::tcp::socket *socket;
         bool isWriting = false;
         bool isReading = false;
 
@@ -70,6 +70,17 @@ namespace ring::net {
         void receive();
         void onDataReceived();
     };
+
+    struct plain_telnet_listen {
+        plain_telnet_listen(entt::entity ent, asio::ip::tcp::endpoint endp);
+        entt::entity entity;
+        asio::ip::tcp::acceptor acceptor;
+
+        bool isListening = false;
+
+        void listen();
+    };
+
 
 }
 

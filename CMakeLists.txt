@@ -58,7 +58,6 @@ include_directories(PUBLIC
         ${fmt_SOURCE_DIR}/include
         ${eff_random_SOURCE_DIR}/include
         ${ringnet_SOURCE_DIR}/include
-        ${easyloggingpp_SOURCE_DIR/src}
 )
 
 file(GLOB RINGMUD_INCLUDE include/*.h)
@@ -66,8 +65,6 @@ file(GLOB RINGMUD_SRC src/*.cpp)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "-fpermissive")
-
-link_libraries(easyloggingpp)
 
 add_library(ringmud ${RINGMUD_INCLUDE} ${RINGMUD_SRC})
 link_libraries(ringmud)

@@ -11,9 +11,9 @@
 namespace ring::zone {
     extern std::map<vnum, entt::entity> zones;
 
-    extern std::function<void(vnum v, entt::entity ent)> on_create_zone, on_delete_zone, on_make_zone;
-    extern std::function<void(vnum v, entt::entity ent, nlohmann::json &j)> on_save_zone, on_load_zone;
-    extern std::function<void(vnum v, entt::entity ent, const fs::path&)> on_save_zone_folder, on_load_zone_folder;
+    extern std::function<void(vnum, entt::entity)> on_create_zone, on_delete_zone, on_make_zone;
+    extern std::function<void(vnum, entt::entity, nlohmann::json&)> on_save_zone, on_load_zone;
+    extern std::function<void(vnum, entt::entity, const fs::path&)> on_save_zone_folder, on_load_zone_folder;
 
     struct ResetCommand {
         std::string command, sarg1, sarg2;

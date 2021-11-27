@@ -13,21 +13,10 @@ namespace ring::session {
     extern std::set<uint64_t> closing;
 
     // Since prompts are very game-specific, this is handled via a function pointer.
-    extern std::function<std::string(int64_t, entt::entity)> render_prompt, on_make_session, on_create_session;
-    extern std::function<std::string(int64_t, entt::entity)> on_session_start, on_session_end, handle_output;
-    extern std::function<void(int64_t, entt::entity, nlohmann::json&)> on_save_session, on_load_session;
-    extern std::function<void(int64_t, entt::entity, const std::string &txt)> handle_command;
-
-    class Parser {
-    public:
-        Parser(entt::entity sess);
-        virtual void parse(const std::string &txt) = 0;
-        virtual void start();
-        virtual void close();
-        virtual bool isPlaying() = 0;
-    protected:
-        entt::entity sess;
-    };
+    extern std::function<void(uint64_t, entt::entity)> on_make_session, on_create_session;
+    extern std::function<void(uint64_t, entt::entity)> on_session_start, on_session_end, handle_output;
+    extern std::function<void(uint64_t, entt::entity, nlohmann::json&)> on_save_session, on_load_session;
+    extern std::function<void(uint64_t, entt::entity, const std::string&)> handle_command;
 
     struct SessionData {
         uint64_t char_id;

@@ -13,6 +13,7 @@ namespace ring::core {
     std::mutex new_conn_mutex, closed_conn_mutex, ready_conn_mutex;
     std::set<int> new_connections, closed_connections, ready_connections;
     bool copyover_execute = false, sleeping = true, had_connections = false;
+    bool copyover_after = false;
     asio::high_resolution_timer *loop_timer;
     std::chrono::milliseconds interval = asio::chrono::milliseconds(100);
     uint64_t pulse = 0;
@@ -57,9 +58,17 @@ namespace ring::core {
         loop_timer = new asio::high_resolution_timer(*ring::net::executor);
         loop_timer->expires_after(std::chrono::milliseconds(0));
 
-        if(!copyover_recover && !ring::net::manager.listenPlainTelnet(host, telnet_port)) {
-            //log("Error! Cannot bind to socket!");
-            exit(1);
+        if(copyover_after) {
+            copyover_recover();
+        } else {
+            if(!ring::net::manager.listenPlainTelnet(host, telnet_port)) {
+                //log("Error! Cannot bind to socket!");
+                exit(1);
+            }
+        }
+
+        if(!copyover_after && !ring::net::manager.listenPlainTelnet(host, telnet_port)) {
+
         }
 
         loop_timer->async_wait([](auto ec){if(!ec) clock_loop();});

@@ -10,10 +10,10 @@ namespace ring::session {
     std::map<uint64_t, entt::entity> sessions;
     std::set<uint64_t> closing;
 
-    std::function<std::string(int64_t, entt::entity)> render_prompt, on_make_session, on_create_session;
-    std::function<std::string(int64_t, entt::entity)> on_session_start, on_session_end, handle_output;
-    std::function<void(int64_t, entt::entity, nlohmann::json&)> on_save_session, on_load_session;
-    std::function<void(int64_t, entt::entity, const std::string &txt)> handle_command;
+    std::function<void(uint64_t, entt::entity)> on_make_session, on_create_session;
+    std::function<void(uint64_t, entt::entity)> on_session_start, on_session_end, handle_output;
+    std::function<void(uint64_t, entt::entity, nlohmann::json&)> on_save_session, on_load_session;
+    std::function<void(uint64_t, entt::entity, const std::string&)> handle_command;
 
     void SessionData::writeToOutput(const char *txt, ...) {
         va_list args;

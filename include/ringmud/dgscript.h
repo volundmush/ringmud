@@ -13,7 +13,7 @@ namespace ring::dgscript {
     extern std::function<void(vnum v, entt::entity ent, nlohmann::json &j)> on_save_dgscript, on_load_dgscript;
 
     struct DgScriptData {
-        std::string name{};
+        std::string name;
         uint64_t trigger_type = 0;
         uint8_t attach_type = 0, data_type = 0;
         std::vector<std::string> cmdlist;

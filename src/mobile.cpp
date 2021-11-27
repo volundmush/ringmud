@@ -11,7 +11,7 @@ namespace ring::mobile {
     std::function<void(vnum, entt::entity ent)> on_create_mobile, on_delete_mobile, on_make_mobile;
     std::function<void(vnum, entt::entity, nlohmann::json&)> on_save_mobile, on_load_mobile;
     std::function<void(entt::entity)> handle_mobile_input;
-    std::function<void(entt::entity, std::string)> handle_mobile_command;
+    std::function<void(entt::entity, const std::string&)> handle_mobile_command;
 
     std::function<void(vnum, entt::entity)> on_make_instance, on_create_instance;
     std::function<void(entt::entity, nlohmann::json&)> on_save_instance, on_load_instance;

@@ -13,7 +13,7 @@ namespace ring::core {
     extern entt::registry registry;
     extern std::set<int> new_connections, closed_connections, ready_connections;
     extern std::mutex new_conn_mutex, closed_conn_mutex, ready_conn_mutex;
-    extern bool copyover_execute, sleeping, had_connections;
+    extern bool copyover_execute, sleeping, had_connections, copyover_after;
     extern asio::high_resolution_timer *loop_timer;
     extern fs::path profile_path;
     extern std::chrono::milliseconds interval;

@@ -5,6 +5,9 @@
 #include "dgscript.h"
 
 namespace ring::dgscript {
+    std::map<vnum, entt::entity> dgscripts;
+    std::function<void(vnum v, entt::entity ent)> on_create_dgscript, on_delete_dgscript, on_make_dgscript;
+    std::function<void(vnum v, entt::entity ent, nlohmann::json &j)> on_save_dgscript, on_load_dgscript;
 
     DgScriptEnv::DgScriptEnv(entt::entity ent) : script(ent) {}
 

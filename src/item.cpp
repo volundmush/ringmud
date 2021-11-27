@@ -9,11 +9,11 @@ namespace ring::item {
     std::map<vnum, entt::entity> items;
     std::set<entt::entity> instances;
 
-    std::function<void(vnum v, entt::entity ent)> on_create_item, on_delete_item, on_make_item;
-    std::function<void(vnum v, entt::entity ent, nlohmann::json &j)> on_save_item, on_load_item;
+    std::function<void(vnum, entt::entity)> on_create_item, on_delete_item, on_make_item;
+    std::function<void(vnum, entt::entity, nlohmann::json&)> on_save_item, on_load_item;
 
-    std::function<void(vnum v, entt::entity ent)> on_make_instance;
-    std::function<void(entt::entity ent, nlohmann::json &j)> on_save_instance, on_load_instance;
+    std::function<void(vnum, entt::entity)> on_make_instance, on_create_instance;
+    std::function<void(entt::entity, nlohmann::json&)> on_save_instance, on_load_instance;
 
     entt::entity make_instance(vnum new_item) {
         auto pent = items[new_item];

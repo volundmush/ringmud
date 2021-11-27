@@ -12,11 +12,11 @@ namespace ring::item {
     extern std::map<vnum, entt::entity> items;
     extern std::set<entt::entity> instances;
 
-    extern std::function<void(vnum v, entt::entity ent)> on_create_item, on_delete_item, on_make_item;
-    extern std::function<void(vnum v, entt::entity ent, nlohmann::json &j)> on_save_item, on_load_item;
+    extern std::function<void(vnum, entt::entity)> on_create_item, on_delete_item, on_make_item;
+    extern std::function<void(vnum, entt::entity, nlohmann::json&)> on_save_item, on_load_item;
 
-    extern std::function<void(vnum v, entt::entity ent)> on_make_instance, on_create_instance;
-    extern std::function<void(entt::entity ent, nlohmann::json &j)> on_save_instance, on_load_instance;
+    extern std::function<void(vnum, entt::entity)> on_make_instance, on_create_instance;
+    extern std::function<void(entt::entity, nlohmann::json&)> on_save_instance, on_load_instance;
 
     struct ItemProtoData {
         entt::entity entity;

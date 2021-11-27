@@ -18,7 +18,6 @@ namespace ring::conn {
     extern std::function<void(uint64_t, entt::entity, nlohmann::json&)> handle_input;
 
     struct ConnectionData {
-        explicit ConnectionData(std::weak_ptr<ring::net::connection_details> cd);
         ~ConnectionData();
         std::weak_ptr<ring::net::connection_details> conn;
         std::list<nlohmann::json> input;

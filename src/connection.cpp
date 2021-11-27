@@ -9,6 +9,9 @@ namespace ring::conn {
     std::map<uint64_t, entt::entity> connections;
     std::set<uint64_t> closing;
 
+    std::function<void(uint64_t, entt::entity)> on_make_connection, on_create_connection, on_close_connection;
+    std::function<void(uint64_t, entt::entity, nlohmann::json&)> on_load_connection, on_save_connection;
+    std::function<void(uint64_t, entt::entity, nlohmann::json&)> handle_input;
 
     ConnectionData::~ConnectionData() {
         if(conn.expired()) return;
@@ -49,7 +52,10 @@ namespace ring::conn {
     entt::entity make_connection(uint64_t conn_id) {
         auto ent = core::registry.create();
         auto wp = ring::net::manager.connections[conn_id];
-        core::registry.emplace<ConnectionData>(ent, wp);
+        auto &cdata = core::registry.emplace<ConnectionData>(ent);
+        cdata.entity = ent;
+        cdata.conn_id = conn_id;
+        cdata.conn = wp;
         conn::connections[conn_id] = ent;
         if(on_make_connection) on_make_connection(conn_id, ent);
         return ent;

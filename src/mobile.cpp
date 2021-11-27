@@ -84,7 +84,7 @@ namespace ring::mobile {
         if(on_load_instance) on_load_instance(ent, j);
     }
 
-    void load_items(vnum zone, entt::entity zent, nlohmann::json& j) {
+    void load_mobiles(vnum zone, entt::entity zent, nlohmann::json& j) {
         for(nlohmann::json::iterator it = j.begin(); it != j.end();it++) {
             vnum vn = std::strtoull(it.key().c_str(), nullptr, 10);
             load_mobile(vn, it.value());

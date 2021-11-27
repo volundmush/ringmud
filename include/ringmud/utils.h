@@ -8,7 +8,7 @@
 #include "core.h"
 
 namespace ring::util {
-
+    bool dump_json(const fs::path& dir, nlohmann::json &j, const std::string &fname);
 }
 
 #endif //RINGMUD_UTILS_H

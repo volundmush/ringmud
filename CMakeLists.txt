@@ -51,7 +51,7 @@ CPMAddPackage(
 
 
 include_directories(PUBLIC
-        include
+        include/ringmud
         ${asio_SOURCE_DIR}/asio/include
         ${entt_SOURCE_DIR}/single_include
         ${json_SOURCE_DIR}/single_include

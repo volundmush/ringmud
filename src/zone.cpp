@@ -7,6 +7,7 @@
 #include "dgscript.h"
 #include "item.h"
 #include "mobile.h"
+#include "utils.h"
 
 namespace ring::zone {
 
@@ -145,15 +146,6 @@ namespace ring::zone {
         return j;
     }
 
-    void dump_file(const fs::path& zdir, nlohmann::json &j, const std::string &fname) {
-        if(j.empty())
-            return;
-        std::ofstream f(zdir / fname);
-        if(!f.is_open()) throw std::runtime_error(fmt::format("Cannot open {} at {}", fname, zdir.string()));
-        f << j.dump(4) << std::endl;
-        f.close();
-    }
-
     void save_zone_folder(const fs::path& zpath, vnum zone) {
         auto dir = zpath / std::to_string(zone);
         fs::create_directories(dir);
@@ -161,7 +153,7 @@ namespace ring::zone {
         auto ent = zones[zone];
         auto j = save_zone(zone);
 
-        dump_file(dir, j, "info.json");
+        util::dump_json(dir, j, "info.json");
 
         auto &zindex = core::registry.get<ZoneIndex>(ent);
 
@@ -170,22 +162,22 @@ namespace ring::zone {
         for(const auto& v : zindex.dgscripts) {
             dg[std::to_string(v.first)] = dgscript::save_dgscript(v.first);
         }
-        dump_file(dir, dg, "dgscripts.json");
+        util::dump_json(dir, dg, "dgscripts.json");
 
         for(const auto& v : zindex.dgscripts) {
             room[std::to_string(v.first)] = room::save_room(v.first);
         }
-        dump_file(dir, room, "rooms.json");
+        util::dump_json(dir, room, "rooms.json");
 
         for(const auto& v : zindex.mobiles) {
             mob[std::to_string(v.first)] = mobile::save_mobile(v.first);
         }
-        dump_file(dir, mob, "mobiles.json");
+        util::dump_json(dir, mob, "mobiles.json");
 
         for(const auto& v : zindex.items) {
             item[std::to_string(v.first)] = item::save_item(v.first);
         }
-        dump_file(dir, item, "items.json");
+        util::dump_json(dir, item, "items.json");
 
         if(on_save_zone_folder) on_save_zone_folder(zone, ent, dir);
     }

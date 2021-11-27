@@ -1,33 +1,73 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.17)
+
+set(CPM_DOWNLOAD_VERSION 0.34.0)
+set(CPM_DOWNLOAD_LOCATION "${CMAKE_BINARY_DIR}/cmake/CPM_${CPM_DOWNLOAD_VERSION}.cmake")
+
+if(NOT (EXISTS ${CPM_DOWNLOAD_LOCATION}))
+    message(STATUS "Downloading CPM.cmake")
+    file(DOWNLOAD https://github.com/TheLartians/CPM.cmake/releases/download/v${CPM_DOWNLOAD_VERSION}/CPM.cmake ${CPM_DOWNLOAD_LOCATION})
+endif()
+
+include(${CPM_DOWNLOAD_LOCATION})
 
 project(ringmud)
-include(FetchContent)
 
-FetchContent_Declare(
-        ASIO
-        GIT_REPOSITORY https://github.com/chriskohlhoff/asio
-        GIT_TAG master
+CPMAddPackage(
+        NAME ringnet
+        GITHUB_REPOSITORY volundmush/ringnet
+        GIT_TAG main
 )
 
-FetchContent_Declare(
-        entt
-        GIT_REPOSITORY https://github.com/skypjack/entt
-        GIT_TAG master
+CPMAddPackage(
+        NAME asio
+        GITHUB_REPOSITORY chriskohlhoff/asio
+        GIT_TAG asio-1-21-0
 )
 
-FetchContent_MakeAvailable(ASIO entt)
+CPMAddPackage(
+        NAME entt
+        GITHUB_REPOSITORY skypjack/entt
+        VERSION 3.8.1
+)
+
+CPMAddPackage(
+        NAME json
+        GITHUB_REPOSITORY nlohmann/json
+        VERSION 3.10.4
+)
+
+CPMAddPackage(
+        NAME fmt
+        GITHUB_REPOSITORY fmtlib/fmt
+        GIT_TAG 8.0.1
+)
+
+
+CPMAddPackage(
+        NAME eff_random
+        GITHUB_REPOSITORY effolkronium/random
+        VERSION 1.4.0
+)
+
+
+include_directories(PUBLIC
+        include
+        ${asio_SOURCE_DIR}/asio/include
+        ${entt_SOURCE_DIR}/single_include
+        ${json_SOURCE_DIR}/single_include
+        ${fmt_SOURCE_DIR}/include
+        ${eff_random_SOURCE_DIR}/include
+        ${ringnet_SOURCE_DIR}/include
+        ${easyloggingpp_SOURCE_DIR/src}
+)
 
 file(GLOB RINGMUD_INCLUDE include/*.h)
 file(GLOB RINGMUD_SRC src/*.cpp)
 
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "-fpermissive")
 
-include_directories(include)
-link_libraries(asio entt)
+link_libraries(easyloggingpp)
 
 add_library(ringmud ${RINGMUD_INCLUDE} ${RINGMUD_SRC})
 link_libraries(ringmud)
-
-include_directories(PUBLIC ${asio_SOURCE_DIR}/asio/include ${entt_SOURCE_DIR}/single_include)
-message(${entt_SOURCE_DIR})

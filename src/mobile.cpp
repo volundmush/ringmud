@@ -16,17 +16,17 @@ namespace ring::mobile {
     std::function<void(vnum, entt::entity)> on_make_instance, on_create_instance;
     std::function<void(entt::entity, nlohmann::json&)> on_save_instance, on_load_instance;
 
-    entt::entity make_instance(vnum new_item) {
-        auto pent = mobiles[new_item];
+    entt::entity make_instance(vnum new_mob) {
+        auto pent = mobiles[new_mob];
         auto new_ent = ring::core::registry.create();
         auto &iprot = ring::core::registry.get<MobileProtoData>(pent);
         auto &idata = ring::core::registry.emplace<MobileInstanceData>(new_ent);
-        idata.vn = new_item;
+        idata.vn = new_mob;
         idata.entity = new_ent;
         iprot.instances.insert(new_ent);
         idata.prototype = pent;
         instances.insert(new_ent);
-        if(on_make_instance) on_make_instance(new_item, new_ent);
+        if(on_make_instance) on_make_instance(new_mob, new_ent);
         return new_ent;
     }
 
@@ -51,7 +51,7 @@ namespace ring::mobile {
     entt::entity create(vnum new_mob) {
         if(mobiles.count(new_mob))
             throw std::runtime_error(fmt::format("Mobile {} already exists!", new_mob));
-        auto ent = make_item(new_mob);
+        auto ent = make_mobile(new_mob);
         if(on_create_mobile) on_create_mobile(new_mob, ent);
         return ent;
     }

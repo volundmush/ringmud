@@ -30,7 +30,7 @@ namespace ring::mobile {
         return new_ent;
     }
 
-    entt::entity make_item(vnum new_mob) {
+    entt::entity make_mobile(vnum new_mob) {
         auto new_ent = ring::core::registry.create();
         auto &iprot = ring::core::registry.emplace<MobileProtoData>(new_ent);
         iprot.vn = new_mob;

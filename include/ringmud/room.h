@@ -50,8 +50,7 @@ namespace ring::room {
     };
 
     struct ExDesc {
-        std::vector<std::string> names;
-        std::string description;
+        std::string keyword, description;
     };
 
     struct RoomData {

@@ -22,7 +22,14 @@ namespace ring::item {
         entt::entity entity;
         vnum vn;
         std::set<entt::entity> instances;
+        std::vector<std::string> keywords;
         std::string name = "Unfinished Item", short_desc = "An Unfinished Item", action_desc = "Vaguely Does Something";
+        std::string description = "An Unfinished Item";
+        std::set<flag> extra, wear, perm;
+        uint8_t item_type;
+        std::map<uint8_t, int64_t> values;
+        uint64_t weight, cost, rent, level;
+        uint8_t size;
     };
 
     struct ItemInstanceData {

@@ -52,12 +52,14 @@ CPMAddPackage(
 
 include_directories(PUBLIC
         include/ringmud
+        ${ringnet_SOURCE_DIR}/include
         ${asio_SOURCE_DIR}/asio/include
         ${entt_SOURCE_DIR}/single_include
         ${json_SOURCE_DIR}/single_include
         ${fmt_SOURCE_DIR}/include
         ${eff_random_SOURCE_DIR}/include
-        ${ringnet_SOURCE_DIR}/include
+        ${sqlitepp_SOURCE_DIR}
+        ${argh_SOURCE_DIR}
 )
 
 file(GLOB RINGMUD_INCLUDE include/*.h)
@@ -67,4 +69,4 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "-fpermissive")
 
 add_library(ringmud ${RINGMUD_INCLUDE} ${RINGMUD_SRC})
-link_libraries(ringmud)
+link_libraries(ringmud angelscript)

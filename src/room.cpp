@@ -10,6 +10,26 @@ namespace ring::room {
     std::function<void(vnum v, entt::entity ent)> on_create_room, on_delete_room, on_make_room;
     std::function<void(vnum v, entt::entity ent, nlohmann::json &j)> on_save_room, on_load_room;
 
+    std::map<Direction, Direction> opposite_dir = {
+            {North, South},
+            {South, North},
+
+            {East, West},
+            {West, East},
+
+            {Up, Down},
+            {Down, Up},
+
+            {Northwest, Southeast},
+            {Southeast, Northwest},
+
+            {Northeast, Southwest},
+            {Southwest, Northeast},
+
+            {Inside, Outside},
+            {Outside, Inside}
+    };
+
     entt::entity make_room(vnum zone, vnum new_room) {
         auto new_ent = ring::core::registry.create();
         auto &rdata = ring::core::registry.emplace<RoomData>(new_ent);

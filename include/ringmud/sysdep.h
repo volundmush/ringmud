@@ -52,5 +52,4 @@ typedef uint64_t flag;
 
 // some typestubs follow.
 
-
 #endif //RINGMUD_SYSDEP_H

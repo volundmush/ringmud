@@ -29,7 +29,7 @@ namespace ring::zone {
         *  'E': Obj to char equip *
         *  'D': Set state of door *
         *  'T': Trigger command   *
-            *  'V': Assign a variable *
+        *  'V': Assign a variable *
        */
         nlohmann::json serialize();
     };

@@ -1,39 +1,28 @@
 //
-// Created by volund on 11/25/21.
+// Created by volund on 6/20/22.
 //
 
-#ifndef RINGMUD_CORE_H
-#define RINGMUD_CORE_H
+#ifndef RINGMUD_INCLUDE_RINGMUD_CORE
+#define RINGMUD_INCLUDE_RINGMUD_CORE
 
 #include "sysdep.h"
-#include <mutex>
-#include "asio.hpp"
+#include "spdlog/spdlog.h"
 
-namespace ring::core {
-    extern entt::registry registry;
-    extern std::set<int> new_connections, closed_connections, ready_connections;
-    extern std::mutex new_conn_mutex, closed_conn_mutex, ready_conn_mutex;
-    extern bool copyover_execute, sleeping, had_connections, copyover_after;
-    extern asio::high_resolution_timer *loop_timer;
-    extern fs::path profile_path;
-    extern std::chrono::milliseconds interval;
-    extern uint64_t pulse;
+extern entt::registry world;
 
-    extern std::function<void()> on_copyover_execute, on_copyover_fail, on_load_db;
-    extern std::function<void(nlohmann::json&)> on_copyover_save, on_copyover_recover;
-    extern std::function<void(uint64_t)> on_heartbeat;
+extern std::unordered_map<unique_t, entity_t> entity_instances;
 
-    void connection_ready(int conn_id);
-    void connection_closed(int conn_id);
-    void connection_hasdata(int conn_id);
+extern std::map<zone_vnum, entity_t> zone_table;
+extern std::map<room_vnum, entity_t> room_table;
+extern std::map<obj_vnum, entity_t> object_prototypes;
+extern std::map<mob_vnum, entity_t> mobile_prototypes;
+extern std::map<trig_vnum, entity_t> script_prototypes;
+extern std::map<guild_vnum, entity_t> guild_table;
+extern std::map<shop_vnum, entity_t> shop_table;
+extern std::map<house_vnum, entity_t> house_table;
 
-    void load_db();
-    void clock_loop();
-    void network_loop();
-    void game_loop(const std::string &host, uint16_t telnet_port);
+extern fs::path cwd, legacy_dir, asset_dir, log_dir, save_dir, backup_dir;
 
-    void copyover_recover();
+void setup_log(const std::string &filename);
 
-}
-
-#endif //RINGMUD_CORE_H
+#endif //RINGMUD_INCLUDE_RINGMUD_CORE

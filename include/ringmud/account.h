@@ -1,0 +1,10 @@
+//
+// Created by volund on 6/20/22.
+//
+
+#ifndef RINGMUD_INCLUDE_RINGMUD_ACCOUNT
+#define RINGMUD_INCLUDE_RINGMUD_ACCOUNT
+
+
+
+#endif //RINGMUD_INCLUDE_RINGMUD_ACCOUNT

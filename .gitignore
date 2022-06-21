@@ -56,4 +56,6 @@ dkms.conf
 cmake-build-*
 
 # Ringmud
-libs/
+.assets
+.legacy
+.save
